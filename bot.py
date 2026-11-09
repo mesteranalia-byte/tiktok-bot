@@ -27,6 +27,13 @@ server_thread.start()
 TOKEN = os.environ.get('BOT_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
+# --- LIMPIEZA CLAVE PARA EVITAR EL ERROR 409 ---
+try:
+  bot.remove_webhook()
+  print('Webhook anterior limpiado correctamente.')
+except Exception as e:
+  print(f'Error al limpiar webhook: {e}')
+
 
 def download_tiktok_live(chat_id, username_or_url):
   if not username_or_url.startswith('http'):
