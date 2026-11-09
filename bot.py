@@ -1,8 +1,33 @@
+import http.server
 import os
+import socketserver
 import threading
 import telebot
 import yt_dlp
 
+# --- SERVIDOR WEB INTERNO (Para satisfacer el puerto exigido por Render) ---
+PORT = int(os.environ.get('PORT', 10000))
+
+
+class SimpleHandler(http.server.BaseHTTPRequestHandler):
+
+  def do_GET(self):
+    self.send_response(200)
+    self.end_headers()
+    self.wfile.write(b'Bot de Telegram Activo y Funcionando!')
+
+
+def run_web_server():
+  with socketserver.TCPServer(('', PORT), SimpleHandler) as httpd:
+    print(f'Servidor web interno escuchando en el puerto {PORT}')
+    httpd.serve_forever()
+
+
+# Ejecutar el servidor web en segundo plano para que Render no dé error de puertos
+server_thread = threading.Thread(target=run_web_server, daemon=True)
+server_thread.start()
+
+# --- CÓDIGO DEL BOT DE TELEGRAM ---
 TOKEN = os.environ.get('BOT_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
