@@ -70,8 +70,8 @@ def download_tiktok_live(chat_id, username_or_url):
       if file_size_mb > 50:
         bot.send_message(
             chat_id,
-            f'⚠️ El archivo pesa *{file_size_mb:.2f} MB* (supera el límite'
-            ' de 50MB de Telegram). Está guardado en el servidor temporal.',
+            f'⚠️ El archivo pesa *{file_size_mb:.2f} MB* (supera el límite de'
+            ' 50MB de Telegram). Está guardado en el servidor temporal.',
         )
       else:
         bot.send_document(
@@ -89,8 +89,8 @@ def download_tiktok_live(chat_id, username_or_url):
   except Exception as e:
     bot.send_message(
         chat_id,
-        f'❌ *Error al grabar el directo:*\n`{str(e)}`\n\n_Asegúrate de que'
-        ' el usuario esté transmitiendo ahora mismo._',
+        f'❌ *Error al grabar el directo:*\n`{str(e)}`\n\n_Asegúrate de que el'
+        ' usuario esté transmitiendo ahora mismo._',
         parse_mode='Markdown',
     )
 
@@ -124,7 +124,4 @@ def handle_live(message):
 
 if __name__ == '__main__':
   print('🚀 Bot iniciado en Render...')
-  # remove_webhook=True elimina cualquier sesión colgada anterior
-  bot.infinity_polling(
-      timeout=60, long_polling_timeout=60, remove_webhook=True
-  )
+  bot.infinity_polling(timeout=60, long_polling_timeout=60)
